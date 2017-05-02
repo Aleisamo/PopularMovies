@@ -11,9 +11,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
 
-public class FetchMovieReviews extends AsyncTask<String, Void, MovieReviews[]> {
+public class FetchMovieReviews extends AsyncTask<String, Void, MovieReview[]> {
 
     // Log check Class
     private static final String LOG_TAG = FetchMovieReviews.class.getSimpleName();
@@ -29,13 +28,13 @@ public class FetchMovieReviews extends AsyncTask<String, Void, MovieReviews[]> {
     }
 
     @Override
-    protected MovieReviews[] doInBackground(String... params) {
+    protected MovieReview[] doInBackground(String... params) {
 
         // start Http request
 
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-        String movieJsonStr = null;
+        HttpURLConnection urlConnection;
+        BufferedReader reader;
+        String reviewsJsonStr;
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
@@ -58,16 +57,16 @@ public class FetchMovieReviews extends AsyncTask<String, Void, MovieReviews[]> {
                 return null;
             }
 
-            movieJsonStr = stringBuffer.toString();
-            Log.v(LOG_TAG, "MovieJson String:" + movieJsonStr);
+            reviewsJsonStr = stringBuffer.toString();
+            Log.v(LOG_TAG, "Reviews Json String:" + reviewsJsonStr);
 
         } catch (IOException e) {
             Log.e(LOG_TAG, "Check connection", e);
             return null;
         }
-        MovieReviews[] reviews;
+        MovieReview[] reviews;
         try {
-            reviews = new MovieJson(context).getReviews(movieJsonStr);
+            reviews = new MovieJson().getReviews(reviewsJsonStr);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -86,12 +85,10 @@ public class FetchMovieReviews extends AsyncTask<String, Void, MovieReviews[]> {
 
 
     @Override
-    protected void onPostExecute(final MovieReviews[] reviews) {
+    protected void onPostExecute(final MovieReview[] reviews) {
         if (reviews != null) {
-
-            final ReviewsAdapter reviewAdapter = new ReviewsAdapter(context, Arrays.asList(reviews));
+            final ReviewsAdapter reviewAdapter = new ReviewsAdapter(context, reviews);
             listView.setAdapter(reviewAdapter);
-
         }
     }
 }

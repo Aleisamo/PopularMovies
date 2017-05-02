@@ -11,11 +11,13 @@
         android:layout_height="match_parent"
         android:backgroundTint="#bdbdbd"
         android:orientation="vertical">
+
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="#4db6ac"
-            android:layout_weight="15">
+            android:layout_height="wrap_content"
+            android:layout_weight="15"
+            android:background="#4db6ac">
+
             <TextView
                 android:id="@+id/movie_title"
                 android:layout_width="match_parent"
@@ -24,12 +26,14 @@
                 android:gravity="center"
                 android:textAppearance="?android:textAppearanceLarge" />
         </FrameLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="40"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_weight="40"
             android:orientation="horizontal">
+
             <ImageView
                 android:id="@+id/movie_posterDetails"
                 android:layout_width="wrap_content"
@@ -37,33 +41,37 @@
                 android:layout_gravity="fill_vertical"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="20dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/movie_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:textAppearance="?android:textAppearanceLarge"
-                    android:fontFamily="sans-serif-condensed"/>
+                    android:fontFamily="sans-serif-condensed"
+                    android:textAppearance="?android:textAppearanceLarge" />
+
                 <TextView
                     android:id="@+id/movie_average"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="10dp"
-                    android:textAppearance="?android:textAppearanceSmall"
-                    android:fontFamily="sans-serif-condensed"/>
+                    android:fontFamily="sans-serif-condensed"
+                    android:textAppearance="?android:textAppearanceSmall" />
+
                 <Button
                     android:id="@+id/favorite_movie"
                     style="@style/AppTheme"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:text="Add to favorite"/>
+                    android:text="Add to favorite" />
             </LinearLayout>
         </LinearLayout>
 
@@ -72,43 +80,57 @@
             android:layout_height="2dp"
             android:layout_marginTop="16dp"
             android:background="@color/colorPrimary" />
+
         <TextView
-                android:id="@+id/movie_overView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:fontFamily="sans-serif-condensed"
-                android:textAppearance="?android:textAppearanceSmall"
-                android:textSize="15sp" />
-        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="left"
+            android:text="OVERVIEW" />
+
+        <TextView
+            android:id="@+id/movie_overView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="20"
-            android:background="@drawable/list_item_selector">
-            <TextView
-                android:id="@+id/trailer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="left"
-                android:layout_margin="16dp"/>
-            <ListView
-                android:id="@+id/list_video"
-                android:layout_width="match_parent"
-                android:layout_height="176dp"
-                android:layout_gravity="left"
-                android:layout_margin="16dp" />
-            <ListView
-                android:id="@+id/list_review"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp" />
-        </LinearLayout>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/trailers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="left"
+            android:text="TRAILERS" />
+
+        <ListView
+            android:id="@+id/list_video"
+            android:layout_width="match_parent"
+            android:layout_height="173dp"
+            android:layout_gravity="left"
+            android:layout_margin="16dp" />
+
+        <TextView
+            android:id="@+id/reviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="left"
+            android:text="REVIEWS" />
+
+        <ListView
+            android:id="@+id/list_review"
+            android:layout_width="match_parent"
+            android:layout_height="373dp"
+            android:layout_gravity="right"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            />
 
     </LinearLayout>
 </ScrollView>

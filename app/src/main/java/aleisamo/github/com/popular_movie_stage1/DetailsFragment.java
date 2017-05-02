@@ -17,6 +17,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -36,7 +37,6 @@ import java.net.URL;
 
 import aleisamo.github.com.popular_movie_stage1.data.MovieContract.detailEntry;
 
-
 public class DetailsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int DETAIL_LOADER = 0;
@@ -50,9 +50,10 @@ public class DetailsFragment extends Fragment implements LoaderManager.LoaderCal
     private TextView mOverview;
     private TextView mDate;
     private TextView mVote;
-    private TextView mTrailerTitle;
-    private ListView mListView;
-    private ListView mListReview;
+    private TextView mTrailersTitle;
+    private ListView mListTrailers;
+    private TextView mReviewsTitle;
+    private ListView mListReviews;
     private Button mAddToFavorite;
     private Intent movieDetails;
     private URL reviewsUrl;
@@ -90,7 +91,6 @@ public class DetailsFragment extends Fragment implements LoaderManager.LoaderCal
             final String movie_title = movieDetails.getStringExtra("title");
             final String movie_overView = movieDetails.getStringExtra("overview");
             final String movie_vote = movieDetails.getStringExtra("average");
-            final String trailerTitleView = "TRAILERS";
 
 
             // set up ImageView and TextView using id from layout xml resources
@@ -99,24 +99,39 @@ public class DetailsFragment extends Fragment implements LoaderManager.LoaderCal
             mOverview = (TextView) rootView.findViewById(R.id.movie_overView);
             mDate = (TextView) rootView.findViewById(R.id.movie_date);
             mVote = (TextView) rootView.findViewById(R.id.movie_average);
-            mTrailerTitle = (TextView) rootView.findViewById(R.id.trailer);
+            mTrailersTitle = (TextView) rootView.findViewById(R.id.trailers);
             Log.v(getClass().getSimpleName(), "trailerpath videos:" + trailersUrl.getPath().contains(VIDEOS));
-            mListView = (ListView) rootView.findViewById(R.id.list_video);
-            mListReview = (ListView) rootView.findViewById(R.id.list_review);
+            mListTrailers = (ListView) rootView.findViewById(R.id.list_video);
+            mListTrailers.setOnTouchListener(new View.OnTouchListener() {
+                // Setting on Touch Listener for handling the touch inside ScrollView
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    // Disallow the touch request for parent scroll on touch of child view
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+            });
+            mReviewsTitle = (TextView) rootView.findViewById(R.id.reviews);
+            mListReviews = (ListView) rootView.findViewById(R.id.list_review);
+            mListReviews.setOnTouchListener(new View.OnTouchListener() {
+                // Setting on Touch Listener for handling the touch inside ScrollView
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    // Disallow the touch request for parent scroll on touch of child view
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+            });
 
             if (hasNetworkAccess()) {
-                new FetchMovieVideos(getContext(), mListView, trailersUrl).execute();
-                new FetchMovieReviews(getContext(), mListReview, reviewsUrl).execute();
-            } else {
-                mListReview.setVisibility(View.GONE);
-                mListView.setVisibility(View.GONE);
+                new FetchMovieVideos(getContext(), mListTrailers, trailersUrl).execute();
+                new FetchMovieReviews(getContext(), mListReviews, reviewsUrl).execute();
             }
             // set String from movie to TextView
             mTitle.setText(movie_title);
-            mOverview.setText("Overview: " + "\n" + movie_overView);
+            mOverview.setText(movie_overView);
             mDate.setText(movie_release_day);
             mVote.setText("Average:  " + movie_vote + "/" + "10");
-            mTrailerTitle.setText(trailerTitleView);
 
             // picasso to load the image and set into ImageView
             Picasso.with(getContext()).load(movie_poster).into(mPoster);
@@ -249,8 +264,6 @@ public class DetailsFragment extends Fragment implements LoaderManager.LoaderCal
             return new CursorLoader(getActivity(), uri, projection, null, null, null);
 
         }
-
-
     }
 
     @Override
@@ -277,13 +290,14 @@ public class DetailsFragment extends Fragment implements LoaderManager.LoaderCal
 
             Picasso.with(getContext()).load(new File(poster_path)).into(mPoster);
             mTitle.setText(title);
-            mOverview.setText("Overview: " + "\n" + synopsis);
+            mOverview.setText(synopsis);
             mDate.setText(date);
             mVote.setText("Average: " + vote + "/10");
-            mListView.setVisibility(View.GONE);
             mAddToFavorite.setVisibility(View.GONE);
-            mTrailerTitle.setVisibility(View.GONE);
-
+            mTrailersTitle.setVisibility(View.GONE);
+            mListTrailers.setVisibility(View.GONE);
+            mReviewsTitle.setVisibility(View.GONE);
+            mListReviews.setVisibility(View.GONE);
         }
 
     }

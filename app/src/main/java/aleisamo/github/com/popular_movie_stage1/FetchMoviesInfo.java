@@ -75,7 +75,7 @@ public class FetchMoviesInfo extends AsyncTask<String, Void, Movie[]> {
         }
         Movie[] movie;
         try {
-            movie = new MovieJson(context).getMovieDataFromJson(movieJsonStr);
+            movie = new MovieJson().getMovieDataFromJson(movieJsonStr);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();

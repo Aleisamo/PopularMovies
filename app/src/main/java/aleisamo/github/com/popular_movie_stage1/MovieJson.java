@@ -1,6 +1,5 @@
 package aleisamo.github.com.popular_movie_stage1;
 
-import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -10,10 +9,8 @@ import org.json.JSONObject;
 public class MovieJson {
 
     private static final String LOG_TAG = MovieJson.class.getSimpleName();
-    Context mContext;
 
-    public MovieJson(Context context) {
-        mContext = context;
+    public MovieJson() {
     }
 
     final String RESULTS = "results";
@@ -27,7 +24,7 @@ public class MovieJson {
     final String MOVIE_ID = "id";
     final String KEY = "key";
     final String NAME = "name";
-    final String REVIEWS = "content";
+    final String REVIEW = "content";
     final String AUTHOR = "author";
 
 
@@ -81,24 +78,23 @@ public class MovieJson {
         return movieVideos;
     }
 
-        public MovieReviews[] getReviews(String movieJson){
-        MovieReviews[] movieReviews = null;
+    public MovieReview[] getReviews(String json) {
+        MovieReview[] movieReviews = null;
 
         try {
-            JSONObject result = new JSONObject(movieJson);
+            JSONObject result = new JSONObject(json);
             JSONArray movieJsonArray = result.getJSONArray(RESULTS);
-            movieReviews = new MovieReviews[movieJsonArray.length()];
-            for (int i = 0; i <movieJsonArray.length() ; i++) {
+            movieReviews = new MovieReview[movieJsonArray.length()];
+            for (int i = 0; i < movieJsonArray.length(); i++) {
                 JSONObject jsonObject = movieJsonArray.getJSONObject(i);
                 String author = jsonObject.getString(AUTHOR);
-                String content = jsonObject.getString(REVIEWS);
-                movieReviews[i] = new MovieReviews(author,content);
+                String content = jsonObject.getString(REVIEW);
+                movieReviews[i] = new MovieReview(author, content);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return movieReviews;
-
     }
 
 }
