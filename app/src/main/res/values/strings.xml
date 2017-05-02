@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Popular-Movie-Stage1</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="most_popular_menu">Most Popular</string>
+    <string name="top_rate_menu">Top Rate</string>
+    <string name="most_popular">popular</string>
+    <string name="top_rate">top_rated</string>
+    <string name="movie_details">Movie Details</string>
+    <string name="favorite">favorite</string>
+</resources>
